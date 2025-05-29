@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id            String    @id(map: "company_pkey") @default(cuid()) @db.Uuid
+  cuit          String    @unique @db.VarChar(13)
+  companyName   String    @unique @db.VarChar(50)
+  adhesionDate  DateTime  @default(now())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt @default(now())
+  transfers     Transfer[]
+
+  @@map("company")
+}
+
+model Transfer {
+  id            String    @id(map: "transfer_pkey") @default(cuid()) @db.Uuid
+  amount        Decimal   @db.Decimal(10, 2)
+  debitAccount  String    @db.VarChar(22)
+  creditAccount String    @db.VarChar(22)
+  companyId     String    @db.Uuid
+  company       Company?  @relation(fields: [companyId], references: [id])  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt @default(now())
+
+  @@map("transfer")
+}
