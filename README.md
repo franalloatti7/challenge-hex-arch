@@ -82,39 +82,58 @@ Incluye todos los endpoints documentados con request/response y validaciones.
 
 ---
 
-## 🐳 Entorno Dockerizado
+## 🛠️ Setup Inicial
 
-```bash
-docker-compose up --build -d
-```
+1. Clonar el repositorio:
+
+	```bash
+	git clone https://github.com/franalloatti7/challenge-hex-arch.git
+	cd challenge-hex-arch
+	```
+
+2. Crear el archivo .env a partir del .env.example:
+
+	```bash
+	cp .env.example .env
+	```
+
+### 🐳 OPCION 1 - Entorno Dockerizado
+
+3. Levantar con Docker:
+
+	```bash
+	docker-compose up --build -d
+	```
 
 - **PostgreSQL** configurado para persistencia.
 - **Adminer** disponible en [http://localhost:8080](http://localhost:8080).
+- **App** disponible en [http://localhost:3000](http://localhost:3000).
 - **Prisma** genera esquema y se conecta automáticamente.
 - Soporte para binario `debian-openssl-3.0.x` en entornos Linux.
 
----
 
-## 🛠️ Setup Inicial
+### 🛠️ OPCION 2: Levantar la aplicación localmente
 
-1. Instalar dependencias:
+3. Configurar conexión a la base de datos en .env:
 
-```bash
-npm install
-```
+4. Instalar dependencias:
 
-2. Generar Prisma Client y migraciones:
+	```bash
+	npm install
+	```
 
-```bash
-npm prisma generate
-npm prisma migrate dev
-```
+5. Generar Prisma Client y migraciones:
 
-3. Levantar servicios con Docker:
+	```bash
+	npm prisma generate
+	npm prisma migrate dev
+	```
 
-```bash
-docker-compose up -d
-```
+6. Levantar servicios con Docker:
+
+	```bash
+	npm start:dev
+	```
 
 ---
 
