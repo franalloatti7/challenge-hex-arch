@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Transfer } from '@/transfer/domain/transfer.entity';
 import { TransferRepositoryInterface } from '@/transfer/domain/transfer.repository.interface';
-import { PrismaService } from '@/prisma.service';
+import { PrismaService } from '@/common/prisma/prisma.service';
 
 // Repositorio de transferencias que implementa la interfaz TransferRepositoryInterface
 @Injectable()

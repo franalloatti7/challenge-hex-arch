@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Company, PrimitiveCompany } from '@/company/domain/company.entity';
 import { CompanyRepositoryInterface } from '@/company/domain/company.repository.interface';
-import { PrismaService } from '@/prisma.service';
+import { PrismaService } from '@/common/prisma/prisma.service';
 
 // Repositorio de empresas que implementa la interfaz CompanyRepositoryInterface
 @Injectable()
