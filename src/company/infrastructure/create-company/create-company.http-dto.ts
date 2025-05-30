@@ -7,9 +7,10 @@ import {
   Length,
   Matches
 } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiSchema } from '@nestjs/swagger';
 
 // DTO para crear una nueva empresa
+@ApiSchema({ name: 'Company' })
 export class CreateCompanyHttpDto {
   @IsString()
   @IsNotEmpty()

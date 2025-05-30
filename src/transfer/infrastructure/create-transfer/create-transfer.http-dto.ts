@@ -8,9 +8,10 @@ import {
   Length,
   Matches
 } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiSchema } from '@nestjs/swagger';
 
 // DTO para crear una nueva transferencia
+@ApiSchema({ name: 'Transfer' })
 export class CreateTransferHttpDto {
   @IsNotEmpty({ message: 'El monto es obligatorio' })
   @Matches(/^\d{1,8}(\.\d{1,2})?$/, {

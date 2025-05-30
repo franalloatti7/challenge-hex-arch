@@ -3,7 +3,15 @@ import { CreateTransferUseCase } from '@/transfer/application/create-transfer-us
 import { CreateTransferHttpDto } from './create-transfer.http-dto';
 import { PrimitiveTransfer } from '@/transfer/domain/transfer.entity';
 import { Decimal } from '@prisma/client/runtime/library';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiExtraModels,
+  ApiOperation,
+  ApiTags,
+  getSchemaPath
+} from '@nestjs/swagger';
+import { ApiResponseDto } from '@/common/dto/api-response.dto';
 
 // Controlador para crear una nueva transferencia
 @ApiTags('transfer')
@@ -18,11 +26,26 @@ export class CreateTransferController {
    */
   @Post()
   @ApiOperation({ summary: 'Crear una nueva transferencia' })
-  @ApiResponse({
-    status: 201,
-    description: 'Transferencia creada correctamente'
+  @ApiExtraModels(ApiResponseDto, CreateTransferHttpDto)
+  @ApiCreatedResponse({
+    description: 'Transferencia creada exitosamente',
+    schema: {
+      allOf: [
+        { $ref: getSchemaPath(ApiResponseDto) },
+        {
+          properties: {
+            data: {
+              type: 'object',
+              properties: {
+                company: { $ref: getSchemaPath(CreateTransferHttpDto) }
+              }
+            }
+          }
+        }
+      ]
+    }
   })
-  @ApiResponse({ status: 400, description: 'Datos inválidos' })
+  @ApiBadRequestResponse({ description: 'Error al crear transferencia' })
   async run(
     @Body() createTransferHttpDto: CreateTransferHttpDto
   ): Promise<{ transfer: PrimitiveTransfer }> {
